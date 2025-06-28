@@ -1,0 +1,830 @@
+{
+  "name": "hemaia_d2d_link",
+  "clock_primary": "clk_i",
+  "bus_interfaces": [
+    {
+      "protocol": "reg_iface",
+      "direction": "device"
+    }
+  ],
+  "regwidth": 32,
+  "registers": [
+    {
+      "name": "RESET_REGISTER",
+      "desc": "Reset Register",
+      "fields": [
+        { "bits": "0:0", "name": "RESET", "desc": "Set high to reset", "swaccess": "rw", "hwaccess": "hro", "resval": 0 }
+      ]
+    },
+    {
+      "name": "TEST_MODE_REGISTER",
+      "desc": "Test mode register",
+      "fields": [
+        { "bits": "0:0", "name": "EAST_TEST_REQUEST", "desc": "East test request", "swaccess": "rw", "hwaccess": "hro", "resval": 0 },
+        { "bits": "1:1", "name": "WEST_TEST_REQUEST", "desc": "West test request", "swaccess": "rw", "hwaccess": "hro", "resval": 0 },
+        { "bits": "2:2", "name": "NORTH_TEST_REQUEST", "desc": "North test request", "swaccess": "rw", "hwaccess": "hro", "resval": 0 },
+        { "bits": "3:3", "name": "SOUTH_TEST_REQUEST", "desc": "South test request", "swaccess": "rw", "hwaccess": "hro", "resval": 0 },
+        { "bits": "4:4", "name": "EAST_TEST_BEING_REQUEST", "desc": "East test being request", "swaccess": "ro", "hwaccess": "hwo" },
+        { "bits": "5:5", "name": "WEST_TEST_BEING_REQUEST", "desc": "West test being request", "swaccess": "ro", "hwaccess": "hwo" },
+        { "bits": "6:6", "name": "NORTH_TEST_BEING_REQUEST", "desc": "North test being request", "swaccess": "ro", "hwaccess": "hwo" },
+        { "bits": "7:7", "name": "SOUTH_TEST_BEING_REQUEST", "desc": "South test being request", "swaccess": "ro", "hwaccess": "hwo" }
+      ]
+    },
+    {
+      "name": "AVAILABILITY_REGISTER",
+      "desc": "Availability register",
+      "fields": [
+        { "bits": "0:0", "name": "EAST_LINK_AVAILABLE", "desc": "East link available", "swaccess": "rw", "hwaccess": "hro", "resval": 1 },
+        { "bits": "1:1", "name": "WEST_LINK_AVAILABLE", "desc": "West link available", "swaccess": "rw", "hwaccess": "hro", "resval": 1 },
+        { "bits": "2:2", "name": "NORTH_LINK_AVAILABLE", "desc": "North link available", "swaccess": "rw", "hwaccess": "hro", "resval": 1 },
+        { "bits": "3:3", "name": "SOUTH_LINK_AVAILABLE", "desc": "South link available", "swaccess": "rw", "hwaccess": "hro", "resval": 1 }
+      ]
+    },
+    {
+      "name": "EAST_C0_TEST_MODE_TOTAL_CYCLE_REGISTER",
+      "desc": "East test-mode total cycle count for C0",
+      "fields": [ { "bits": "31:0", "name": "TOTAL_CYCLE_COUNT", "desc": "East test-mode total cycles", "swaccess": "ro", "hwaccess": "hwo" } ]
+    },
+    {
+      "name": "EAST_C1_TEST_MODE_TOTAL_CYCLE_REGISTER",
+      "desc": "East test-mode total cycle count for C1",
+      "fields": [ { "bits": "31:0", "name": "TOTAL_CYCLE_COUNT", "desc": "East test-mode total cycles for C1", "swaccess": "ro", "hwaccess": "hwo" } ]
+    },
+    {
+      "name": "EAST_C2_TEST_MODE_TOTAL_CYCLE_REGISTER",
+      "desc": "East test-mode total cycle count for C2",
+      "fields": [ { "bits": "31:0", "name": "TOTAL_CYCLE_COUNT", "desc": "East test-mode total cycles for C2", "swaccess": "ro", "hwaccess": "hwo" } ]
+    },
+    {
+      "name": "EAST_C0_TEST_MODE_ERROR_REGISTER_0",
+      "desc": "East C0 test-mode error count for channel 0, wire 0-3",
+      "fields": [
+      { "bits": "7:0",   "name": "ERROR_COUNT_W0",  "desc": "Error count wire 0",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "15:8",  "name": "ERROR_COUNT_W1",  "desc": "Error count wire 1",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "23:16", "name": "ERROR_COUNT_W2",  "desc": "Error count wire 2",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "31:24", "name": "ERROR_COUNT_W3",  "desc": "Error count wire 3",  "swaccess": "ro", "hwaccess": "hwo" }
+      ]
+    },
+    {
+      "name": "EAST_C0_TEST_MODE_ERROR_REGISTER_1",
+      "desc": "East C0 test-mode error count for channel 0, wire 4-7",
+      "fields": [
+      { "bits": "7:0",   "name": "ERROR_COUNT_W4",  "desc": "Error count wire 4",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "15:8",  "name": "ERROR_COUNT_W5",  "desc": "Error count wire 5",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "23:16", "name": "ERROR_COUNT_W6",  "desc": "Error count wire 6",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "31:24", "name": "ERROR_COUNT_W7",  "desc": "Error count wire 7",  "swaccess": "ro", "hwaccess": "hwo" }
+      ]
+    },
+    {
+      "name": "EAST_C0_TEST_MODE_ERROR_REGISTER_2",
+      "desc": "East C0 test-mode error count for channel 0, wire 8-11",
+      "fields": [
+      { "bits": "7:0",   "name": "ERROR_COUNT_W8",  "desc": "Error count wire 8",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "15:8",  "name": "ERROR_COUNT_W9",  "desc": "Error count wire 9",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "23:16", "name": "ERROR_COUNT_W10", "desc": "Error count wire 10", "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "31:24", "name": "ERROR_COUNT_W11", "desc": "Error count wire 11", "swaccess": "ro", "hwaccess": "hwo" }
+      ]
+    },
+    {
+      "name": "EAST_C0_TEST_MODE_ERROR_REGISTER_3",
+      "desc": "East C0 test-mode error count for channel 0, wire 12-15",
+      "fields": [
+      { "bits": "7:0",   "name": "ERROR_COUNT_W12", "desc": "Error count wire 12", "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "15:8",  "name": "ERROR_COUNT_W13", "desc": "Error count wire 13", "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "23:16", "name": "ERROR_COUNT_W14", "desc": "Error count wire 14", "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "31:24", "name": "ERROR_COUNT_W15", "desc": "Error count wire 15", "swaccess": "ro", "hwaccess": "hwo" }
+      ]
+    },
+    {
+      "name": "EAST_C0_TEST_MODE_ERROR_REGISTER_4",
+      "desc": "East C0 test-mode error count for channel 0, wire 16",
+      "fields": [
+      { "bits": "7:0",   "name": "ERROR_COUNT_W16", "desc": "Error count channel 16", "swaccess": "ro", "hwaccess": "hwo" }
+      ]
+    },
+    {
+      "name": "EAST_C1_TEST_MODE_ERROR_REGISTER_0",
+      "desc": "East C1 test-mode error count for channel 0, wire 0-3",
+      "fields": [
+      { "bits": "7:0",   "name": "ERROR_COUNT_W0",  "desc": "Error count wire 0",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "15:8",  "name": "ERROR_COUNT_W1",  "desc": "Error count wire 1",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "23:16", "name": "ERROR_COUNT_W2",  "desc": "Error count wire 2",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "31:24", "name": "ERROR_COUNT_W3",  "desc": "Error count wire 3",  "swaccess": "ro", "hwaccess": "hwo" }
+      ]
+    },
+    {
+      "name": "EAST_C1_TEST_MODE_ERROR_REGISTER_1",
+      "desc": "East C1 test-mode error count for channel 0, wire 4-7",
+      "fields": [
+      { "bits": "7:0",   "name": "ERROR_COUNT_W4",  "desc": "Error count wire 4",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "15:8",  "name": "ERROR_COUNT_W5",  "desc": "Error count wire 5",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "23:16", "name": "ERROR_COUNT_W6",  "desc": "Error count wire 6",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "31:24", "name": "ERROR_COUNT_W7",  "desc": "Error count wire 7",  "swaccess": "ro", "hwaccess": "hwo" }
+      ]
+    },
+    {
+      "name": "EAST_C1_TEST_MODE_ERROR_REGISTER_2",
+      "desc": "East C1 test-mode error count for channel 0, wire 8-11",
+      "fields": [
+      { "bits": "7:0",   "name": "ERROR_COUNT_W8",  "desc": "Error count wire 8",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "15:8",  "name": "ERROR_COUNT_W9",  "desc": "Error count wire 9",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "23:16", "name": "ERROR_COUNT_W10", "desc": "Error count wire 10", "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "31:24", "name": "ERROR_COUNT_W11", "desc": "Error count wire 11", "swaccess": "ro", "hwaccess": "hwo" }
+      ]
+    },
+    {
+      "name": "EAST_C1_TEST_MODE_ERROR_REGISTER_3",
+      "desc": "East C1 test-mode error count for channel 0, wire 12-15",
+      "fields": [
+      { "bits": "7:0",   "name": "ERROR_COUNT_W12", "desc": "Error count wire 12", "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "15:8",  "name": "ERROR_COUNT_W13", "desc": "Error count wire 13", "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "23:16", "name": "ERROR_COUNT_W14", "desc": "Error count wire 14", "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "31:24", "name": "ERROR_COUNT_W15", "desc": "Error count wire 15", "swaccess": "ro", "hwaccess": "hwo" }
+      ]
+    },
+    {
+      "name": "EAST_C1_TEST_MODE_ERROR_REGISTER_4",
+      "desc": "East C1 test-mode error count for channel 0, wire 16",
+      "fields": [
+      { "bits": "7:0",   "name": "ERROR_COUNT_W16", "desc": "Error count channel 16", "swaccess": "ro", "hwaccess": "hwo" }
+      ]
+    },
+    {
+      "name": "EAST_C2_TEST_MODE_ERROR_REGISTER_0",
+      "desc": "East C2 test-mode error count for channel 0, wire 0-3",
+      "fields": [
+      { "bits": "7:0",   "name": "ERROR_COUNT_W0",  "desc": "Error count wire 0",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "15:8",  "name": "ERROR_COUNT_W1",  "desc": "Error count wire 1",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "23:16", "name": "ERROR_COUNT_W2",  "desc": "Error count wire 2",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "31:24", "name": "ERROR_COUNT_W3",  "desc": "Error count wire 3",  "swaccess": "ro", "hwaccess": "hwo" }
+      ]
+    },
+    {
+      "name": "EAST_C2_TEST_MODE_ERROR_REGISTER_1",
+      "desc": "East C2 test-mode error count for channel 0, wire 4-7",
+      "fields": [
+      { "bits": "7:0",   "name": "ERROR_COUNT_W4",  "desc": "Error count wire 4",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "15:8",  "name": "ERROR_COUNT_W5",  "desc": "Error count wire 5",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "23:16", "name": "ERROR_COUNT_W6",  "desc": "Error count wire 6",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "31:24", "name": "ERROR_COUNT_W7",  "desc": "Error count wire 7",  "swaccess": "ro", "hwaccess": "hwo" }
+      ]
+    },
+    {
+      "name": "EAST_C2_TEST_MODE_ERROR_REGISTER_2",
+      "desc": "East C2 test-mode error count for channel 0, wire 8-11",
+      "fields": [
+      { "bits": "7:0",   "name": "ERROR_COUNT_W8",  "desc": "Error count wire 8",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "15:8",  "name": "ERROR_COUNT_W9",  "desc": "Error count wire 9",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "23:16", "name": "ERROR_COUNT_W10", "desc": "Error count wire 10", "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "31:24", "name": "ERROR_COUNT_W11", "desc": "Error count wire 11", "swaccess": "ro", "hwaccess": "hwo" }
+      ]
+    },
+    {
+      "name": "EAST_C2_TEST_MODE_ERROR_REGISTER_3",
+      "desc": "East C2 test-mode error count for channel 0, wire 12-15",
+      "fields": [
+      { "bits": "7:0",   "name": "ERROR_COUNT_W12", "desc": "Error count wire 12", "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "15:8",  "name": "ERROR_COUNT_W13", "desc": "Error count wire 13", "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "23:16", "name": "ERROR_COUNT_W14", "desc": "Error count wire 14", "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "31:24", "name": "ERROR_COUNT_W15", "desc": "Error count wire 15", "swaccess": "ro", "hwaccess": "hwo" }
+      ]
+    },
+    {
+      "name": "EAST_C2_TEST_MODE_ERROR_REGISTER_4",
+      "desc": "East C2 test-mode error count for channel 0, wire 16",
+      "fields": [
+      { "bits": "7:0",   "name": "ERROR_COUNT_W16", "desc": "Error count channel 16", "swaccess": "ro", "hwaccess": "hwo" }
+      ]
+    },
+    {
+      "name": "EAST_PROGRAMMABLE_CLOCK_DELAY_REGISTER",
+      "desc": "Programmable clock delay for east side (8 bits per channel)",
+      "fields": [
+      { "bits": "7:0", "name": "CLOCK_DELAY_C0", "desc": "Clock delay setting for C0", "swaccess": "rw", "hwaccess": "hro", "resval": 0 },
+      { "bits": "15:8", "name": "CLOCK_DELAY_C1", "desc": "Clock delay setting for C1", "swaccess": "rw", "hwaccess": "hro", "resval": 0 },
+      { "bits": "23:16", "name": "CLOCK_DELAY_C2", "desc": "Clock delay setting for C2", "swaccess": "rw", "hwaccess": "hro", "resval": 0 }
+      ]
+    },
+    {
+      "name": "EAST_BROKEN_WIRE_REGISTER",
+      "desc": "Per-side programmable broken link idx for the bypass (8 bits each)",
+      "fields": [
+      { "bits": "4:0", "name": "BROKEN_LINK_C0", "desc": "Broken link setting for C0", "swaccess": "rw", "hwaccess": "hro", "resval": 16 },
+      { "bits": "12:8", "name": "BROKEN_LINK_C1", "desc": "Broken link setting for C1", "swaccess": "rw", "hwaccess": "hro", "resval": 16 },
+      { "bits": "20:16", "name": "BROKEN_LINK_C2", "desc": "Broken link setting for C2", "swaccess": "rw", "hwaccess": "hro", "resval": 16 }
+      ]
+    },
+    {
+      "name": "WEST_C0_TEST_MODE_TOTAL_CYCLE_REGISTER",
+      "desc": "West test-mode total cycle count for C0",
+      "fields": [ { "bits": "31:0", "name": "TOTAL_CYCLE_COUNT", "desc": "West test-mode total cycles", "swaccess": "ro", "hwaccess": "hwo" } ]
+    },
+    {
+      "name": "WEST_C1_TEST_MODE_TOTAL_CYCLE_REGISTER",
+      "desc": "West test-mode total cycle count for C1",
+      "fields": [ { "bits": "31:0", "name": "TOTAL_CYCLE_COUNT", "desc": "West test-mode total cycles for C1", "swaccess": "ro", "hwaccess": "hwo" } ]
+    },
+    {
+      "name": "WEST_C2_TEST_MODE_TOTAL_CYCLE_REGISTER",
+      "desc": "West test-mode total cycle count for C2",
+      "fields": [ { "bits": "31:0", "name": "TOTAL_CYCLE_COUNT", "desc": "West test-mode total cycles for C2", "swaccess": "ro", "hwaccess": "hwo" } ]
+    },
+    {
+      "name": "WEST_C0_TEST_MODE_ERROR_REGISTER_0",
+      "desc": "West C0 test-mode error count for channel 0, wire 0-3",
+      "fields": [
+      { "bits": "7:0",   "name": "ERROR_COUNT_W0",  "desc": "Error count wire 0",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "15:8",  "name": "ERROR_COUNT_W1",  "desc": "Error count wire 1",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "23:16", "name": "ERROR_COUNT_W2",  "desc": "Error count wire 2",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "31:24", "name": "ERROR_COUNT_W3",  "desc": "Error count wire 3",  "swaccess": "ro", "hwaccess": "hwo" }
+      ]
+    },
+    {
+      "name": "WEST_C0_TEST_MODE_ERROR_REGISTER_1",
+      "desc": "West C0 test-mode error count for channel 0, wire 4-7",
+      "fields": [
+      { "bits": "7:0",   "name": "ERROR_COUNT_W4",  "desc": "Error count wire 4",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "15:8",  "name": "ERROR_COUNT_W5",  "desc": "Error count wire 5",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "23:16", "name": "ERROR_COUNT_W6",  "desc": "Error count wire 6",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "31:24", "name": "ERROR_COUNT_W7",  "desc": "Error count wire 7",  "swaccess": "ro", "hwaccess": "hwo" }
+      ]
+    },
+    {
+      "name": "WEST_C0_TEST_MODE_ERROR_REGISTER_2",
+      "desc": "West C0 test-mode error count for channel 0, wire 8-11",
+      "fields": [
+      { "bits": "7:0",   "name": "ERROR_COUNT_W8",  "desc": "Error count wire 8",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "15:8",  "name": "ERROR_COUNT_W9",  "desc": "Error count wire 9",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "23:16", "name": "ERROR_COUNT_W10", "desc": "Error count wire 10", "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "31:24", "name": "ERROR_COUNT_W11", "desc": "Error count wire 11", "swaccess": "ro", "hwaccess": "hwo" }
+      ]
+    },
+    {
+      "name": "WEST_C0_TEST_MODE_ERROR_REGISTER_3",
+      "desc": "West C0 test-mode error count for channel 0, wire 12-15",
+      "fields": [
+      { "bits": "7:0",   "name": "ERROR_COUNT_W12", "desc": "Error count wire 12", "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "15:8",  "name": "ERROR_COUNT_W13", "desc": "Error count wire 13", "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "23:16", "name": "ERROR_COUNT_W14", "desc": "Error count wire 14", "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "31:24", "name": "ERROR_COUNT_W15", "desc": "Error count wire 15", "swaccess": "ro", "hwaccess": "hwo" }
+      ]
+    },
+    {
+      "name": "WEST_C0_TEST_MODE_ERROR_REGISTER_4",
+      "desc": "West C0 test-mode error count for channel 0, wire 16",
+      "fields": [
+      { "bits": "7:0",   "name": "ERROR_COUNT_W16", "desc": "Error count channel 16", "swaccess": "ro", "hwaccess": "hwo" }
+      ]
+    },
+    {
+      "name": "WEST_C1_TEST_MODE_ERROR_REGISTER_0",
+      "desc": "West C1 test-mode error count for channel 0, wire 0-3",
+      "fields": [
+      { "bits": "7:0",   "name": "ERROR_COUNT_W0",  "desc": "Error count wire 0",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "15:8",  "name": "ERROR_COUNT_W1",  "desc": "Error count wire 1",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "23:16", "name": "ERROR_COUNT_W2",  "desc": "Error count wire 2",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "31:24", "name": "ERROR_COUNT_W3",  "desc": "Error count wire 3",  "swaccess": "ro", "hwaccess": "hwo" }
+      ]
+    },
+    {
+      "name": "WEST_C1_TEST_MODE_ERROR_REGISTER_1",
+      "desc": "West C1 test-mode error count for channel 0, wire 4-7",
+      "fields": [
+      { "bits": "7:0",   "name": "ERROR_COUNT_W4",  "desc": "Error count wire 4",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "15:8",  "name": "ERROR_COUNT_W5",  "desc": "Error count wire 5",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "23:16", "name": "ERROR_COUNT_W6",  "desc": "Error count wire 6",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "31:24", "name": "ERROR_COUNT_W7",  "desc": "Error count wire 7",  "swaccess": "ro", "hwaccess": "hwo" }
+      ]
+    },
+    {
+      "name": "WEST_C1_TEST_MODE_ERROR_REGISTER_2",
+      "desc": "West C1 test-mode error count for channel 0, wire 8-11",
+      "fields": [
+      { "bits": "7:0",   "name": "ERROR_COUNT_W8",  "desc": "Error count wire 8",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "15:8",  "name": "ERROR_COUNT_W9",  "desc": "Error count wire 9",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "23:16", "name": "ERROR_COUNT_W10", "desc": "Error count wire 10", "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "31:24", "name": "ERROR_COUNT_W11", "desc": "Error count wire 11", "swaccess": "ro", "hwaccess": "hwo" }
+      ]
+    },
+    {
+      "name": "WEST_C1_TEST_MODE_ERROR_REGISTER_3",
+      "desc": "West C1 test-mode error count for channel 0, wire 12-15",
+      "fields": [
+      { "bits": "7:0",   "name": "ERROR_COUNT_W12", "desc": "Error count wire 12", "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "15:8",  "name": "ERROR_COUNT_W13", "desc": "Error count wire 13", "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "23:16", "name": "ERROR_COUNT_W14", "desc": "Error count wire 14", "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "31:24", "name": "ERROR_COUNT_W15", "desc": "Error count wire 15", "swaccess": "ro", "hwaccess": "hwo" }
+      ]
+    },
+    {
+      "name": "WEST_C1_TEST_MODE_ERROR_REGISTER_4",
+      "desc": "West C1 test-mode error count for channel 0, wire 16",
+      "fields": [
+      { "bits": "7:0",   "name": "ERROR_COUNT_W16", "desc": "Error count channel 16", "swaccess": "ro", "hwaccess": "hwo" }
+      ]
+    },
+    {
+      "name": "WEST_C2_TEST_MODE_ERROR_REGISTER_0",
+      "desc": "West C2 test-mode error count for channel 0, wire 0-3",
+      "fields": [
+      { "bits": "7:0",   "name": "ERROR_COUNT_W0",  "desc": "Error count wire 0",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "15:8",  "name": "ERROR_COUNT_W1",  "desc": "Error count wire 1",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "23:16", "name": "ERROR_COUNT_W2",  "desc": "Error count wire 2",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "31:24", "name": "ERROR_COUNT_W3",  "desc": "Error count wire 3",  "swaccess": "ro", "hwaccess": "hwo" }
+      ]
+    },
+    {
+      "name": "WEST_C2_TEST_MODE_ERROR_REGISTER_1",
+      "desc": "West C2 test-mode error count for channel 0, wire 4-7",
+      "fields": [
+      { "bits": "7:0",   "name": "ERROR_COUNT_W4",  "desc": "Error count wire 4",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "15:8",  "name": "ERROR_COUNT_W5",  "desc": "Error count wire 5",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "23:16", "name": "ERROR_COUNT_W6",  "desc": "Error count wire 6",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "31:24", "name": "ERROR_COUNT_W7",  "desc": "Error count wire 7",  "swaccess": "ro", "hwaccess": "hwo" }
+      ]
+    },
+    {
+      "name": "WEST_C2_TEST_MODE_ERROR_REGISTER_2",
+      "desc": "West C2 test-mode error count for channel 0, wire 8-11",
+      "fields": [
+      { "bits": "7:0",   "name": "ERROR_COUNT_W8",  "desc": "Error count wire 8",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "15:8",  "name": "ERROR_COUNT_W9",  "desc": "Error count wire 9",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "23:16", "name": "ERROR_COUNT_W10", "desc": "Error count wire 10", "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "31:24", "name": "ERROR_COUNT_W11", "desc": "Error count wire 11", "swaccess": "ro", "hwaccess": "hwo" }
+      ]
+    },
+    {
+      "name": "WEST_C2_TEST_MODE_ERROR_REGISTER_3",
+      "desc": "West C2 test-mode error count for channel 0, wire 12-15",
+      "fields": [
+      { "bits": "7:0",   "name": "ERROR_COUNT_W12", "desc": "Error count wire 12", "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "15:8",  "name": "ERROR_COUNT_W13", "desc": "Error count wire 13", "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "23:16", "name": "ERROR_COUNT_W14", "desc": "Error count wire 14", "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "31:24", "name": "ERROR_COUNT_W15", "desc": "Error count wire 15", "swaccess": "ro", "hwaccess": "hwo" }
+      ]
+    },
+    {
+      "name": "WEST_C2_TEST_MODE_ERROR_REGISTER_4",
+      "desc": "West C2 test-mode error count for channel 0, wire 16",
+      "fields": [
+      { "bits": "7:0",   "name": "ERROR_COUNT_W16", "desc": "Error count channel 16", "swaccess": "ro", "hwaccess": "hwo" }
+      ]
+    },
+    {
+      "name": "WEST_PROGRAMMABLE_CLOCK_DELAY_REGISTER",
+      "desc": "Programmable clock delay for west side (8 bits per channel)",
+      "fields": [
+      { "bits": "7:0", "name": "CLOCK_DELAY_C0", "desc": "Clock delay setting for C0", "swaccess": "rw", "hwaccess": "hro", "resval": 0 },
+      { "bits": "15:8", "name": "CLOCK_DELAY_C1", "desc": "Clock delay setting for C1", "swaccess": "rw", "hwaccess": "hro", "resval": 0 },
+      { "bits": "23:16", "name": "CLOCK_DELAY_C2", "desc": "Clock delay setting for C2", "swaccess": "rw", "hwaccess": "hro", "resval": 0 }
+      ]
+    },
+    {
+      "name": "WEST_BROKEN_WIRE_REGISTER",
+      "desc": "Per-side programmable broken link idx for the bypass (8 bits each)",
+      "fields": [
+      { "bits": "4:0", "name": "BROKEN_LINK_C0", "desc": "Broken link setting for C0", "swaccess": "rw", "hwaccess": "hro", "resval": 16 },
+      { "bits": "12:8", "name": "BROKEN_LINK_C1", "desc": "Broken link setting for C1", "swaccess": "rw", "hwaccess": "hro", "resval": 16 },
+      { "bits": "20:16", "name": "BROKEN_LINK_C2", "desc": "Broken link setting for C2", "swaccess": "rw", "hwaccess": "hro", "resval": 16 }
+      ]
+    },
+    {
+      "name": "NORTH_C0_TEST_MODE_TOTAL_CYCLE_REGISTER",
+      "desc": "North test-mode total cycle count for C0",
+      "fields": [ { "bits": "31:0", "name": "TOTAL_CYCLE_COUNT", "desc": "North test-mode total cycles for C0", "swaccess": "ro", "hwaccess": "hwo" } ]
+    },
+    {
+      "name": "NORTH_C1_TEST_MODE_TOTAL_CYCLE_REGISTER",
+      "desc": "North test-mode total cycle count for C1",
+      "fields": [ { "bits": "31:0", "name": "TOTAL_CYCLE_COUNT", "desc": "North test-mode total cycles for C1", "swaccess": "ro", "hwaccess": "hwo" } ]
+    },
+    {
+      "name": "NORTH_C2_TEST_MODE_TOTAL_CYCLE_REGISTER",
+      "desc": "North test-mode total cycle count for C2",
+      "fields": [ { "bits": "31:0", "name": "TOTAL_CYCLE_COUNT", "desc": "North test-mode total cycles for C2", "swaccess": "ro", "hwaccess": "hwo" } ]
+    },
+    {
+      "name": "NORTH_C0_TEST_MODE_ERROR_REGISTER_0",
+      "desc": "North C0 test-mode error count for channel 0, wire 0-3",
+      "fields": [
+      { "bits": "7:0",   "name": "ERROR_COUNT_W0",  "desc": "Error count wire 0",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "15:8",  "name": "ERROR_COUNT_W1",  "desc": "Error count wire 1",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "23:16", "name": "ERROR_COUNT_W2",  "desc": "Error count wire 2",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "31:24", "name": "ERROR_COUNT_W3",  "desc": "Error count wire 3",  "swaccess": "ro", "hwaccess": "hwo" }
+      ]
+    },
+    {
+      "name": "NORTH_C0_TEST_MODE_ERROR_REGISTER_1",
+      "desc": "North C0 test-mode error count for channel 0, wire 4-7",
+      "fields": [
+      { "bits": "7:0",   "name": "ERROR_COUNT_W4",  "desc": "Error count wire 4",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "15:8",  "name": "ERROR_COUNT_W5",  "desc": "Error count wire 5",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "23:16", "name": "ERROR_COUNT_W6",  "desc": "Error count wire 6",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "31:24", "name": "ERROR_COUNT_W7",  "desc": "Error count wire 7",  "swaccess": "ro", "hwaccess": "hwo" }
+      ]
+    },
+    {
+      "name": "NORTH_C0_TEST_MODE_ERROR_REGISTER_2",
+      "desc": "North C0 test-mode error count for channel 0, wire 8-11",
+      "fields": [
+      { "bits": "7:0",   "name": "ERROR_COUNT_W8",  "desc": "Error count wire 8",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "15:8",  "name": "ERROR_COUNT_W9",  "desc": "Error count wire 9",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "23:16", "name": "ERROR_COUNT_W10", "desc": "Error count wire 10", "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "31:24", "name": "ERROR_COUNT_W11", "desc": "Error count wire 11", "swaccess": "ro", "hwaccess": "hwo" }
+      ]
+    },
+    {
+      "name": "NORTH_C0_TEST_MODE_ERROR_REGISTER_3",
+      "desc": "North C0 test-mode error count for channel 0, wire 12-15",
+      "fields": [
+      { "bits": "7:0",   "name": "ERROR_COUNT_W12", "desc": "Error count wire 12", "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "15:8",  "name": "ERROR_COUNT_W13", "desc": "Error count wire 13", "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "23:16", "name": "ERROR_COUNT_W14", "desc": "Error count wire 14", "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "31:24", "name": "ERROR_COUNT_W15", "desc": "Error count wire 15", "swaccess": "ro", "hwaccess": "hwo" }
+      ]
+    },
+    {
+      "name": "NORTH_C0_TEST_MODE_ERROR_REGISTER_4",
+      "desc": "North C0 test-mode error count for channel 0, wire 16",
+      "fields": [
+      { "bits": "7:0",   "name": "ERROR_COUNT_W16", "desc": "Error count wire 16", "swaccess": "ro", "hwaccess": "hwo" }
+      ]
+    },
+    {
+      "name": "NORTH_C1_TEST_MODE_ERROR_REGISTER_0",
+      "desc": "North C1 test-mode error count for channel 0, wire 0-3",
+      "fields": [
+      { "bits": "7:0",   "name": "ERROR_COUNT_W0",  "desc": "Error count wire 0",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "15:8",  "name": "ERROR_COUNT_W1",  "desc": "Error count wire 1",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "23:16", "name": "ERROR_COUNT_W2",  "desc": "Error count wire 2",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "31:24", "name": "ERROR_COUNT_W3",  "desc": "Error count wire 3",  "swaccess": "ro", "hwaccess": "hwo" }
+      ]
+    },
+    {
+      "name": "NORTH_C1_TEST_MODE_ERROR_REGISTER_1",
+      "desc": "North C1 test-mode error count for channel 0, wire 4-7",
+      "fields": [
+      { "bits": "7:0",   "name": "ERROR_COUNT_W4",  "desc": "Error count wire 4",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "15:8",  "name": "ERROR_COUNT_W5",  "desc": "Error count wire 5",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "23:16", "name": "ERROR_COUNT_W6",  "desc": "Error count wire 6",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "31:24", "name": "ERROR_COUNT_W7",  "desc": "Error count wire 7",  "swaccess": "ro", "hwaccess": "hwo" }
+      ]
+    },
+    {
+      "name": "NORTH_C1_TEST_MODE_ERROR_REGISTER_2",
+      "desc": "North C1 test-mode error count for channel 0, wire 8-11",
+      "fields": [
+      { "bits": "7:0",   "name": "ERROR_COUNT_W8",  "desc": "Error count wire 8",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "15:8",  "name": "ERROR_COUNT_W9",  "desc": "Error count wire 9",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "23:16", "name": "ERROR_COUNT_W10", "desc": "Error count wire 10", "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "31:24", "name": "ERROR_COUNT_W11", "desc": "Error count wire 11", "swaccess": "ro", "hwaccess": "hwo" }
+      ]
+    },
+    {
+      "name": "NORTH_C1_TEST_MODE_ERROR_REGISTER_3",
+      "desc": "North C1 test-mode error count for channel 0, wire 12-15",
+      "fields": [
+      { "bits": "7:0",   "name": "ERROR_COUNT_W12", "desc": "Error count wire 12", "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "15:8",  "name": "ERROR_COUNT_W13", "desc": "Error count wire 13", "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "23:16", "name": "ERROR_COUNT_W14", "desc": "Error count wire 14", "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "31:24", "name": "ERROR_COUNT_W15", "desc": "Error count wire 15", "swaccess": "ro", "hwaccess": "hwo" }
+      ]
+    },
+    {
+      "name": "NORTH_C1_TEST_MODE_ERROR_REGISTER_4",
+      "desc": "North C1 test-mode error count for channel 0, wire 16",
+      "fields": [
+      { "bits": "7:0",   "name": "ERROR_COUNT_W16", "desc": "Error count wire 16", "swaccess": "ro", "hwaccess": "hwo" }
+      ]
+    },
+    {
+      "name": "NORTH_C2_TEST_MODE_ERROR_REGISTER_0",
+      "desc": "North C2 test-mode error count for channel 0, wire 0-3",
+      "fields": [
+      { "bits": "7:0",   "name": "ERROR_COUNT_W0",  "desc": "Error count wire 0",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "15:8",  "name": "ERROR_COUNT_W1",  "desc": "Error count wire 1",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "23:16", "name": "ERROR_COUNT_W2",  "desc": "Error count wire 2",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "31:24", "name": "ERROR_COUNT_W3",  "desc": "Error count wire 3",  "swaccess": "ro", "hwaccess": "hwo" }
+      ]
+    },
+    {
+      "name": "NORTH_C2_TEST_MODE_ERROR_REGISTER_1",
+      "desc": "North C2 test-mode error count for channel 0, wire 4-7",
+      "fields": [
+      { "bits": "7:0",   "name": "ERROR_COUNT_W4",  "desc": "Error count wire 4",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "15:8",  "name": "ERROR_COUNT_W5",  "desc": "Error count wire 5",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "23:16", "name": "ERROR_COUNT_W6",  "desc": "Error count wire 6",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "31:24", "name": "ERROR_COUNT_W7",  "desc": "Error count wire 7",  "swaccess": "ro", "hwaccess": "hwo" }
+      ]
+    },
+    {
+      "name": "NORTH_C2_TEST_MODE_ERROR_REGISTER_2",
+      "desc": "North C2 test-mode error count for channel 0, wire 8-11",
+      "fields": [
+      { "bits": "7:0",   "name": "ERROR_COUNT_W8",  "desc": "Error count wire 8",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "15:8",  "name": "ERROR_COUNT_W9",  "desc": "Error count wire 9",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "23:16", "name": "ERROR_COUNT_W10", "desc": "Error count wire 10", "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "31:24", "name": "ERROR_COUNT_W11", "desc": "Error count wire 11", "swaccess": "ro", "hwaccess": "hwo" }
+      ]
+    },
+    {
+      "name": "NORTH_C2_TEST_MODE_ERROR_REGISTER_3",
+      "desc": "North C2 test-mode error count for channel 0, wire 12-15",
+      "fields": [
+      { "bits": "7:0",   "name": "ERROR_COUNT_W12", "desc": "Error count wire 12", "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "15:8",  "name": "ERROR_COUNT_W13", "desc": "Error count wire 13", "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "23:16", "name": "ERROR_COUNT_W14", "desc": "Error count wire 14", "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "31:24", "name": "ERROR_COUNT_W15", "desc": "Error count wire 15", "swaccess": "ro", "hwaccess": "hwo" }
+      ]
+    },
+    {
+      "name": "NORTH_C2_TEST_MODE_ERROR_REGISTER_4",
+      "desc": "North C2 test-mode error count for channel 0, wire 16",
+      "fields": [
+      { "bits": "7:0",   "name": "ERROR_COUNT_W16", "desc": "Error count wire 16", "swaccess": "ro", "hwaccess": "hwo" }
+      ]
+    },
+    {
+      "name": "NORTH_PROGRAMMABLE_CLOCK_DELAY_REGISTER",
+      "desc": "Programmable clock delay for north side (8 bits per channel)",
+      "fields": [
+      { "bits": "7:0", "name": "CLOCK_DELAY_C0", "desc": "Clock delay setting for C0", "swaccess": "rw", "hwaccess": "hro", "resval": 0 },
+      { "bits": "15:8", "name": "CLOCK_DELAY_C1", "desc": "Clock delay setting for C1", "swaccess": "rw", "hwaccess": "hro", "resval": 0 },
+      { "bits": "23:16", "name": "CLOCK_DELAY_C2", "desc": "Clock delay setting for C2", "swaccess": "rw", "hwaccess": "hro", "resval": 0 }
+      ]
+    },
+    {
+      "name": "NORTH_BROKEN_WIRE_REGISTER",
+      "desc": "Per-side programmable broken link idx for the bypass (8 bits each)",
+      "fields": [
+      { "bits": "4:0", "name": "BROKEN_LINK_C0", "desc": "Broken link setting for C0", "swaccess": "rw", "hwaccess": "hro", "resval": 16 },
+      { "bits": "12:8", "name": "BROKEN_LINK_C1", "desc": "Broken link setting for C1", "swaccess": "rw", "hwaccess": "hro", "resval": 16 },
+      { "bits": "20:16", "name": "BROKEN_LINK_C2", "desc": "Broken link setting for C2", "swaccess": "rw", "hwaccess": "hro", "resval": 16 }
+      ]
+    },
+    {
+      "name": "SOUTH_C0_TEST_MODE_TOTAL_CYCLE_REGISTER",
+      "desc": "South test-mode total cycle count for C0",
+      "fields": [ { "bits": "31:0", "name": "TOTAL_CYCLE_COUNT", "desc": "South test-mode total cycles for C0", "swaccess": "ro", "hwaccess": "hwo" } ]
+    },
+    {
+      "name": "SOUTH_C1_TEST_MODE_TOTAL_CYCLE_REGISTER",
+      "desc": "South test-mode total cycle count for C1",
+      "fields": [ { "bits": "31:0", "name": "TOTAL_CYCLE_COUNT", "desc": "South test-mode total cycles for C1", "swaccess": "ro", "hwaccess": "hwo" } ]
+    },
+    {
+      "name": "SOUTH_C2_TEST_MODE_TOTAL_CYCLE_REGISTER",
+      "desc": "South test-mode total cycle count for C2",
+      "fields": [ { "bits": "31:0", "name": "TOTAL_CYCLE_COUNT", "desc": "South test-mode total cycles for C2", "swaccess": "ro", "hwaccess": "hwo" } ]
+    },
+    {
+      "name": "SOUTH_C0_TEST_MODE_ERROR_REGISTER_0",
+      "desc": "South C0 test-mode error count for channel 0, wire 0-3",
+      "fields": [
+      { "bits": "7:0",   "name": "ERROR_COUNT_W0",  "desc": "Error count wire 0",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "15:8",  "name": "ERROR_COUNT_W1",  "desc": "Error count wire 1",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "23:16", "name": "ERROR_COUNT_W2",  "desc": "Error count wire 2",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "31:24", "name": "ERROR_COUNT_W3",  "desc": "Error count wire 3",  "swaccess": "ro", "hwaccess": "hwo" }
+      ]
+    },
+    {
+      "name": "SOUTH_C0_TEST_MODE_ERROR_REGISTER_1",
+      "desc": "South C0 test-mode error count for channel 0, wire 4-7",
+      "fields": [
+      { "bits": "7:0",   "name": "ERROR_COUNT_W4",  "desc": "Error count wire 4",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "15:8",  "name": "ERROR_COUNT_W5",  "desc": "Error count wire 5",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "23:16", "name": "ERROR_COUNT_W6",  "desc": "Error count wire 6",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "31:24", "name": "ERROR_COUNT_W7",  "desc": "Error count wire 7",  "swaccess": "ro", "hwaccess": "hwo" }
+      ]
+    },
+    {
+      "name": "SOUTH_C0_TEST_MODE_ERROR_REGISTER_2",
+      "desc": "South C0 test-mode error count for channel 0, wire 8-11",
+      "fields": [
+      { "bits": "7:0",   "name": "ERROR_COUNT_W8",  "desc": "Error count wire 8",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "15:8",  "name": "ERROR_COUNT_W9",  "desc": "Error count wire 9",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "23:16", "name": "ERROR_COUNT_W10", "desc": "Error count wire 10", "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "31:24", "name": "ERROR_COUNT_W11", "desc": "Error count wire 11", "swaccess": "ro", "hwaccess": "hwo" }
+      ]
+    },
+    {
+      "name": "SOUTH_C0_TEST_MODE_ERROR_REGISTER_3",
+      "desc": "South C0 test-mode error count for channel 0, wire 12-15",
+      "fields": [
+      { "bits": "7:0",   "name": "ERROR_COUNT_W12", "desc": "Error count wire 12", "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "15:8",  "name": "ERROR_COUNT_W13", "desc": "Error count wire 13", "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "23:16", "name": "ERROR_COUNT_W14", "desc": "Error count wire 14", "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "31:24", "name": "ERROR_COUNT_W15", "desc": "Error count wire 15", "swaccess": "ro", "hwaccess": "hwo" }
+      ]
+    },
+    {
+      "name": "SOUTH_C0_TEST_MODE_ERROR_REGISTER_4",
+      "desc": "South C0 test-mode error count for channel 0, wire 16",
+      "fields": [
+      { "bits": "7:0",   "name": "ERROR_COUNT_W16", "desc": "Error count wire 16", "swaccess": "ro", "hwaccess": "hwo" }
+      ]
+    },
+    {
+      "name": "SOUTH_C1_TEST_MODE_ERROR_REGISTER_0",
+      "desc": "South C1 test-mode error count for channel 0, wire 0-3",
+      "fields": [
+      { "bits": "7:0",   "name": "ERROR_COUNT_W0",  "desc": "Error count wire 0",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "15:8",  "name": "ERROR_COUNT_W1",  "desc": "Error count wire 1",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "23:16", "name": "ERROR_COUNT_W2",  "desc": "Error count wire 2",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "31:24", "name": "ERROR_COUNT_W3",  "desc": "Error count wire 3",  "swaccess": "ro", "hwaccess": "hwo" }
+      ]
+    },
+    {
+      "name": "SOUTH_C1_TEST_MODE_ERROR_REGISTER_1",
+      "desc": "South C1 test-mode error count for channel 0, wire 4-7",
+      "fields": [
+      { "bits": "7:0",   "name": "ERROR_COUNT_W4",  "desc": "Error count wire 4",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "15:8",  "name": "ERROR_COUNT_W5",  "desc": "Error count wire 5",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "23:16", "name": "ERROR_COUNT_W6",  "desc": "Error count wire 6",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "31:24", "name": "ERROR_COUNT_W7",  "desc": "Error count wire 7",  "swaccess": "ro", "hwaccess": "hwo" }
+      ]
+    },
+    {
+      "name": "SOUTH_C1_TEST_MODE_ERROR_REGISTER_2",
+      "desc": "South C1 test-mode error count for channel 0, wire 8-11",
+      "fields": [
+      { "bits": "7:0",   "name": "ERROR_COUNT_W8",  "desc": "Error count wire 8",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "15:8",  "name": "ERROR_COUNT_W9",  "desc": "Error count wire 9",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "23:16", "name": "ERROR_COUNT_W10", "desc": "Error count wire 10", "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "31:24", "name": "ERROR_COUNT_W11", "desc": "Error count wire 11", "swaccess": "ro", "hwaccess": "hwo" }
+      ]
+    },
+    {
+      "name": "SOUTH_C1_TEST_MODE_ERROR_REGISTER_3",
+      "desc": "South C1 test-mode error count for channel 0, wire 12-15",
+      "fields": [
+      { "bits": "7:0",   "name": "ERROR_COUNT_W12", "desc": "Error count wire 12", "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "15:8",  "name": "ERROR_COUNT_W13", "desc": "Error count wire 13", "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "23:16", "name": "ERROR_COUNT_W14", "desc": "Error count wire 14", "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "31:24", "name": "ERROR_COUNT_W15", "desc": "Error count wire 15", "swaccess": "ro", "hwaccess": "hwo" }
+      ]
+    },
+    {
+      "name": "SOUTH_C1_TEST_MODE_ERROR_REGISTER_4",
+      "desc": "South C1 test-mode error count for channel 0, wire 16",
+      "fields": [
+      { "bits": "7:0",   "name": "ERROR_COUNT_W16", "desc": "Error count wire 16", "swaccess": "ro", "hwaccess": "hwo" }
+      ]
+    },
+    {
+      "name": "SOUTH_C2_TEST_MODE_ERROR_REGISTER_0",
+      "desc": "South C2 test-mode error count for channel 0, wire 0-3",
+      "fields": [
+      { "bits": "7:0",   "name": "ERROR_COUNT_W0",  "desc": "Error count wire 0",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "15:8",  "name": "ERROR_COUNT_W1",  "desc": "Error count wire 1",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "23:16", "name": "ERROR_COUNT_W2",  "desc": "Error count wire 2",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "31:24", "name": "ERROR_COUNT_W3",  "desc": "Error count wire 3",  "swaccess": "ro", "hwaccess": "hwo" }
+      ]
+    },
+    {
+      "name": "SOUTH_C2_TEST_MODE_ERROR_REGISTER_1",
+      "desc": "South C2 test-mode error count for channel 0, wire 4-7",
+      "fields": [
+      { "bits": "7:0",   "name": "ERROR_COUNT_W4",  "desc": "Error count wire 4",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "15:8",  "name": "ERROR_COUNT_W5",  "desc": "Error count wire 5",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "23:16", "name": "ERROR_COUNT_W6",  "desc": "Error count wire 6",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "31:24", "name": "ERROR_COUNT_W7",  "desc": "Error count wire 7",  "swaccess": "ro", "hwaccess": "hwo" }
+      ]
+    },
+    {
+      "name": "SOUTH_C2_TEST_MODE_ERROR_REGISTER_2",
+      "desc": "South C2 test-mode error count for channel 0, wire 8-11",
+      "fields": [
+      { "bits": "7:0",   "name": "ERROR_COUNT_W8",  "desc": "Error count wire 8",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "15:8",  "name": "ERROR_COUNT_W9",  "desc": "Error count wire 9",  "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "23:16", "name": "ERROR_COUNT_W10", "desc": "Error count wire 10", "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "31:24", "name": "ERROR_COUNT_W11", "desc": "Error count wire 11", "swaccess": "ro", "hwaccess": "hwo" }
+      ]
+    },
+    {
+      "name": "SOUTH_C2_TEST_MODE_ERROR_REGISTER_3",
+      "desc": "South C2 test-mode error count for channel 0, wire 12-15",
+      "fields": [
+      { "bits": "7:0",   "name": "ERROR_COUNT_W12", "desc": "Error count wire 12", "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "15:8",  "name": "ERROR_COUNT_W13", "desc": "Error count wire 13", "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "23:16", "name": "ERROR_COUNT_W14", "desc": "Error count wire 14", "swaccess": "ro", "hwaccess": "hwo" },
+      { "bits": "31:24", "name": "ERROR_COUNT_W15", "desc": "Error count wire 15", "swaccess": "ro", "hwaccess": "hwo" }
+      ]
+    },
+    {
+      "name": "SOUTH_C2_TEST_MODE_ERROR_REGISTER_4",
+      "desc": "South C2 test-mode error count for channel 0, wire 16",
+      "fields": [
+      { "bits": "7:0",   "name": "ERROR_COUNT_W16", "desc": "Error count wire 16", "swaccess": "ro", "hwaccess": "hwo" }
+      ]
+    },
+    {
+      "name": "SOUTH_PROGRAMMABLE_CLOCK_DELAY_REGISTER",
+      "desc": "Programmable clock delay for south side (8 bits per channel)",
+      "fields": [
+      { "bits": "7:0", "name": "CLOCK_DELAY_C0", "desc": "Clock delay setting for C0", "swaccess": "rw", "hwaccess": "hro", "resval": 0 },
+      { "bits": "15:8", "name": "CLOCK_DELAY_C1", "desc": "Clock delay setting for C1", "swaccess": "rw", "hwaccess": "hro", "resval": 0 },
+      { "bits": "23:16", "name": "CLOCK_DELAY_C2", "desc": "Clock delay setting for C2", "swaccess": "rw", "hwaccess": "hro", "resval": 0 }
+      ]
+    },
+    {
+      "name": "SOUTH_BROKEN_WIRE_REGISTER",
+      "desc": "Per-side programmable broken link idx for the bypass (8 bits each)",
+      "fields": [
+      { "bits": "4:0", "name": "BROKEN_LINK_C0", "desc": "Broken link setting for C0", "swaccess": "rw", "hwaccess": "hro", "resval": 16 },
+      { "bits": "12:8", "name": "BROKEN_LINK_C1", "desc": "Broken link setting for C1", "swaccess": "rw", "hwaccess": "hro", "resval": 16 },
+      { "bits": "20:16", "name": "BROKEN_LINK_C2", "desc": "Broken link setting for C2", "swaccess": "rw", "hwaccess": "hro", "resval": 16 }
+      ]
+    },
+    {
+      "name": "FEC_UNRECOVERABLE_ERROR_REGISTER",
+      "desc": "FEC unrecoverable error counter",
+      "fields": [
+        { "bits": "7:0", "name": "EAST", "desc": "East side", "swaccess": "ro", "hwaccess": "hwo" },
+        { "bits": "15:8", "name": "WEST", "desc": "West side", "swaccess": "ro", "hwaccess": "hwo" },
+        { "bits": "23:16", "name": "NORTH", "desc": "North side", "swaccess": "ro", "hwaccess": "hwo" },
+        { "bits": "31:24", "name": "SOUTH", "desc": "South side", "swaccess": "ro", "hwaccess": "hwo" }
+      ]
+    },
+    {
+      "name": "PROGRAMMABLE_DRIVE_STRENGTH_REGISTER",
+      "desc": "Per-side TX drive strength (8 bits each, default F)",
+      "fields": [
+        { "bits": "7:0", "name": "EAST_TX_STRENGTH", "desc": "East TX drive strength", "swaccess": "rw", "hwaccess": "hro", "resval": 255 },
+        { "bits": "15:8", "name": "WEST_TX_STRENGTH", "desc": "West TX drive strength", "swaccess": "rw", "hwaccess": "hro", "resval": 255 },
+        { "bits": "23:16", "name": "NORTH_TX_STRENGTH", "desc": "North TX drive strength", "swaccess": "rw", "hwaccess": "hro", "resval": 255 },
+        { "bits": "31:24", "name": "SOUTH_TX_STRENGTH", "desc": "South TX drive strength", "swaccess": "rw", "hwaccess": "hro", "resval": 255 }
+      ]
+    },
+    {
+      "name": "RX_BUFFER_THRESHOLD_REGISTER",
+      "desc": "Per-side RX buffer threshold (8 bits each)",
+      "fields": [
+        { "bits": "7:0", "name": "EAST_RX_BUFFER_THRESHOLD", "desc": "East RX buffer threshold", "swaccess": "rw", "hwaccess": "hro", "resval": 4 },
+        { "bits": "15:8", "name": "WEST_RX_BUFFER_THRESHOLD", "desc": "West RX buffer threshold", "swaccess": "rw", "hwaccess": "hro", "resval": 4 },
+        { "bits": "23:16", "name": "NORTH_RX_BUFFER_THRESHOLD", "desc": "North RX buffer threshold", "swaccess": "rw", "hwaccess": "hro", "resval": 4 },
+        { "bits": "31:24", "name": "SOUTH_RX_BUFFER_THRESHOLD", "desc": "South RX buffer threshold", "swaccess": "rw", "hwaccess": "hro", "resval": 4 }
+      ]
+    },
+    {
+      "name": "TX_BACKOFF_PERIOD_REGISTER",
+      "desc": "Per-side TX backoff period (8 bits each)",
+      "fields": [
+        { "bits": "7:0", "name": "EAST_TX_BACKOFF_PERIOD", "desc": "East backoff period", "swaccess": "rw", "hwaccess": "hro", "resval": 3 },
+        { "bits": "15:8", "name": "WEST_TX_BACKOFF_PERIOD", "desc": "West backoff period", "swaccess": "rw", "hwaccess": "hro", "resval": 3 },
+        { "bits": "23:16", "name": "NORTH_TX_BACKOFF_PERIOD", "desc": "North backoff period", "swaccess": "rw", "hwaccess": "hro", "resval": 3 },
+        { "bits": "31:24", "name": "SOUTH_TX_BACKOFF_PERIOD", "desc": "South backoff period", "swaccess": "rw", "hwaccess": "hro", "resval": 3 }
+      ]
+    },
+    {
+      "name": "TX_HOLD_PERIOD_REGISTER",
+      "desc": "Per-side TX hold period (8 bits each)",
+      "fields": [
+        { "bits": "7:0", "name": "EAST_TX_HOLD_PERIOD", "desc": "East hold period", "swaccess": "rw", "hwaccess": "hro", "resval": 16 },
+        { "bits": "15:8", "name": "WEST_TX_HOLD_PERIOD", "desc": "West hold period", "swaccess": "rw", "hwaccess": "hro", "resval": 16 },
+        { "bits": "23:16", "name": "NORTH_TX_HOLD_PERIOD", "desc": "North hold period", "swaccess": "rw", "hwaccess": "hro", "resval": 16 },
+        { "bits": "31:24", "name": "SOUTH_TX_HOLD_PERIOD", "desc": "South hold period", "swaccess": "rw", "hwaccess": "hro", "resval": 16 }
+      ]
+    },
+    {
+      "name": "TX_MODE_MONITOR_REGISTER",
+      "desc": "Live indication of operating mode (0=rx, 1=tx)",
+      "fields": [
+        { "bits": "0:0", "name": "EAST_TX_MODE", "desc": "East TX mode", "swaccess": "ro", "hwaccess": "hwo" },
+        { "bits": "8:8", "name": "WEST_TX_MODE", "desc": "West TX mode", "swaccess": "ro", "hwaccess": "hwo" },
+        { "bits": "16:16", "name": "NORTH_TX_MODE", "desc": "North TX mode", "swaccess": "ro", "hwaccess": "hwo" },
+        { "bits": "24:24", "name": "SOUTH_TX_MODE", "desc": "South TX mode", "swaccess": "ro", "hwaccess": "hwo" }
+      ]
+    },
+    {
+      "name": "TX_MODE_CLOCK_FREQUENCY_REGISTER",
+      "desc": "Clock-frequency selection for TX high-speed mode (8 bits each)",
+      "fields": [
+        { "bits": "7:0", "name": "EAST_TX_CLOCK_FREQUENCY", "desc": "East TX clock freq sel", "swaccess": "rw", "hwaccess": "hro", "resval": 0 },
+        { "bits": "15:8", "name": "WEST_TX_CLOCK_FREQUENCY", "desc": "West TX clock freq sel", "swaccess": "rw", "hwaccess": "hro", "resval": 0 },
+        { "bits": "23:16", "name": "NORTH_TX_CLOCK_FREQUENCY", "desc": "North TX clock freq sel", "swaccess": "rw", "hwaccess": "hro", "resval": 0 },
+        { "bits": "31:24", "name": "SOUTH_TX_CLOCK_FREQUENCY", "desc": "South TX clock freq sel", "swaccess": "rw", "hwaccess": "hro", "resval": 0 }
+      ]
+    },
+    {
+      "name": "PHY_CLOCK_GATING_DELAY_REGISTER",
+      "desc": "RX Phy Clock gating delay for automatic switch (8 bits each); 0 means no delay",
+      "fields": [
+        { "bits": "7:0", "name": "EAST", "desc": "East side", "swaccess": "rw", "hwaccess": "hro", "resval": 32 },
+        { "bits": "15:8", "name": "WEST", "desc": "West side", "swaccess": "rw", "hwaccess": "hro", "resval": 32 },
+        { "bits": "23:16", "name": "NORTH", "desc": "North side", "swaccess": "rw", "hwaccess": "hro", "resval": 32 },
+        { "bits": "31:24", "name": "SOUTH", "desc": "South side", "swaccess": "rw", "hwaccess": "hro", "resval": 32 }
+      ]
+    },
+    {
+      "name": "PHY_DATA_TRANSMISSION_DELAY_REGISTER",
+      "desc": "Enable Clock Transmission before data transmission. Should be not smaller than 1 Cycle",
+      "fields": [
+        { "bits": "7:0", "name": "EAST", "desc": "East side", "swaccess": "rw", "hwaccess": "hro", "resval": 8 },
+        { "bits": "15:8", "name": "WEST", "desc": "West side", "swaccess": "rw", "hwaccess": "hro", "resval": 8 },
+        { "bits": "23:16", "name": "NORTH", "desc": "North side", "swaccess": "rw", "hwaccess": "hro", "resval": 8 },
+        { "bits": "31:24", "name": "SOUTH", "desc": "South side", "swaccess": "rw", "hwaccess": "hro", "resval": 8 }
+      ]
+    }
+  ]
+}

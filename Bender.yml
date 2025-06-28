@@ -2,4 +2,6 @@ package:
   name: hemaia_d2d_link
   authors:
     - "Yunhao Deng <yunhao.deng@kuleuven.be>"
+  dependencies:
+    register_interface:     { git:  https://github.com/pulp-platform/register_interface.git,  version: 0.3.8   }
 
